@@ -1,0 +1,72 @@
+<html>
+<head>
+<title>DreamQRCode</title>
+</head>
+<body>
+
+<!--<script type="text/javascript" src="../jquery.qrcode.min.js"></script>
+-->
+<script type="text/javascript" src="js/qrcode.js"></script>
+<script type="text/javascript" src="js/render.qrcode.js"></script>
+<p>Render in table</p>
+<div id="qrcodeTable"></div>
+<p>Render in canvas</p>
+<div id="qrcodeCanvas"  style="background:url(zeeging.jpg) #000; padding:100px;"></div>
+<script type="text/javascript">
+	//jQuery('#qrcode').qrcode("this plugin is great");
+	/*document.getElementById('qrcodeTable').qrcode({
+		render	: "table",
+		text	: "http://jetienne.com"
+	});*/
+	document.getElementById("qrcodeCanvas").qrcode({
+		text:"http://zeeging.com/",
+		width:300,
+    	height:300,
+		typeNumber:-1,
+		correctLevel:QRErrorCorrectLevel.H,
+		background:"rgba(255,255,255,1)",
+   		foreground:"rgba(0,0,0,1)"
+	});
+	function genaratorQRCode(){
+		document.getElementById("qrcodeCanvas").innerHTML="";
+		var text=document.getElementById("text").value;
+		var width=document.getElementById("width").value;
+		var height=document.getElementById("height").value;
+		document.getElementById("qrcodeCanvas").qrcode({
+			text:text,
+			width:width,
+			height:height,
+			typeNumber:-1,
+			correctLevel:QRErrorCorrectLevel.H,
+			background:"rgba(255,255,255,1)",
+			foreground:"rgba(0,0,0,1)"
+		});
+	}
+	function showQRCode(){
+		var theCanvas=document.getElementById("qrcodeCanvas").getElementsByTagName("canvas").item(0);
+		var imageSrc=theCanvas.toDataURL("image/png");
+		var imageEle=document.createElement("img");
+		imageEle.src=imageSrc;
+		console.log(imageSrc);
+		document.getElementById("imgdiv").appendChild(imageEle);
+	}
+	function getQRCode(){
+		var theCanvas=document.getElementById("qrcodeCanvas").getElementsByTagName("canvas").item(0);
+		var imageSrc=theCanvas.toDataURL("image/png").replace("image/png","image/octet-stream");
+		//var imageEle=document.createElement("img");
+		//imageEle.src=imageSrc;
+		//console.log(imageSrc);
+		//document.getElementById("imgdiv").appendChild(imageEle);
+		window.location.href=imageSrc;
+	}
+</script>
+<div style="background:#1ba1e2;"></div>
+内容<textarea name="text" id="text" style="height:80px;width:300px;">http://zeeging.com/qrcode/yGyyXWIADggkI</textarea><br />
+高<input type="text" name="height" value="300" id="height" /><br />
+宽<input type="text" name="width" value="300" id="width" /><br />
+<input type="button" value="生成" onClick="genaratorQRCode()" /><br />
+<a href="javascript:void(0);" onClick="showQRCode()">显示到图片</a><br />
+<a href="javascript:void(0);" onClick="getQRCode()">下载图片</a>
+<div id="imgdiv"></div>
+</body>
+</html>
